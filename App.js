@@ -1,14 +1,8 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {Splash} from './src/pages';
 
 const App = () => {
-  return (
-    <View>
-      <Text>Welcome to React Native </Text>
-    </View>
-  );
+  return <Splash />;
 };
 
 export default App;
-
-const styles = StyleSheet.create({});
