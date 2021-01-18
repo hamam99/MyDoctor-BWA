@@ -1,22 +1,25 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 
-const Button = () => {
+const Button = ({type, title}) => {
   return (
-    <View style={styles.page}>
-      <Text style={styles.title}>I am button</Text>
+    <View style={styles.container(type)}>
+      <Text style={styles.title(type)}>{title}</Text>
     </View>
   );
 };
 export default Button;
 
 const styles = StyleSheet.create({
-  page: {
-  },
-  title: {
-    fontSize: 20,
+  container: (type) =>({
+    backgroundColor:type === 'secondary' ? 'white' : '#0BCAD4',
+    borderRadius:10,
+    paddingVertical:10,
+  }),
+  title: (type) => ({
+    fontSize:   16,
     fontWeight: '600',
-    color: '#112340',
-    marginTop: 20,
-  },
+    color: type === 'secondary' ? 'black' : 'white',
+    textAlign:'center',
+  }),
 });
