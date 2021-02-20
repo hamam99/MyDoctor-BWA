@@ -17,9 +17,10 @@ const styles = StyleSheet.create({
     paddingVertical:10,
   }),
   title: (type) => ({
-    fontSize:   16,
+    fontSize:   18,
     fontWeight: '600',
     color: type === 'secondary' ? 'black' : 'white',
     textAlign:'center',
+    fontFamily:'Nunito-SemiBold',
   }),
 });

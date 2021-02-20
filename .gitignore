@@ -58,3 +58,4 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 /ios/Index/DataStore/
+android/app/release/
