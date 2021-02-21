@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View} from 'react-native';
 
 const Gap = ({height, width}) => {
   return (

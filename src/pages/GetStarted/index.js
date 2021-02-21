@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, ImageBackground} from 'react-native';
 import {ILGetStarted, ILLogo} from '../../assets/ilustration';
-import { Button } from '../../components';
+import { Button, Gap } from '../../components';
 
 const GetStarted = () => {
   return (
@@ -14,7 +14,7 @@ const GetStarted = () => {
     </View>
       <View>
         <Button title="Get Started"  />
-        <View style= {{ height:16 }}/>
+        <Gap height={16} />
         <Button title="Sign In" type="secondary"/>
       </View>
     </ImageBackground>

@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   }),
   title: (type) => ({
     fontSize:   18,
-    fontWeight: '600',
     color: type === 'secondary' ? 'black' : 'white',
     textAlign:'center',
     fontFamily:'Nunito-SemiBold',
