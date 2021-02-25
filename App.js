@@ -1,8 +1,14 @@
 import React from 'react';
-import {Splash, GetStarted} from './src/pages';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import Router from './src/router';
 
 const App = () => {
-  return <GetStarted />;
+  return (
+    <NavigationContainer>
+      <Router/>
+    </NavigationContainer>
+  );
 };
 
 export default App;
