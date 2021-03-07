@@ -7,6 +7,7 @@ import {
   Input,
   Link,
 } from '../../components';
+import { colors } from '../../utils';
 
 const Login = () => {
     return (
@@ -32,12 +33,12 @@ const Login = () => {
     page: {
       flex: 1,
       padding: 40,
-      backgroundColor:'white',
+      backgroundColor: colors.white,
     },
     title: {
       fontSize:20,
       fontFamily:'Nunito-SemiBold',
-      color:'#112340',
+      color:colors.text.primary,
       marginTop:40,
       marginBottom:40,
       maxWidth:153,

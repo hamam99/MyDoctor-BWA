@@ -2,6 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, ImageBackground} from 'react-native';
 import {ILGetStarted, ILLogo} from '../../assets/ilustration';
 import { Button, Gap } from '../../components';
+import { colors } from '../../utils';
 
 const GetStarted = ({navigation}) => {
   return (
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding:40,
     justifyContent:'space-between',
+    backgroundColor:colors.white,
   },
   title: {
     fontSize: 28,
