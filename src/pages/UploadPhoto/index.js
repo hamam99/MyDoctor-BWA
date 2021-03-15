@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ShadowPropTypesIOS } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 import { colors, fonts } from '../../utils';
 import { Button, Gap, Header, Link } from '../../components';
 import { IconAddPhoto, ILNullPhoto } from '../../assets';
