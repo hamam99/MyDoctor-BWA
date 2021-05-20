@@ -2,13 +2,14 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { GetStarted, Splash,Login, Register, UploadPhoto, Doctor, Messages, Hospitals } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomNavigator } from '../components';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MainApp = () => {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator tabBar={props => <BottomNavigator  {...props}/>}>
             <Tab.Screen name= "Doctor" component={Doctor}/>
             <Tab.Screen name= "Message" component={Messages}/>
             <Tab.Screen name= "Hospital" component={Hospitals}/>
@@ -18,10 +19,10 @@ const MainApp = () => {
 
 const Router = () => {
     return (
-        <Stack.Navigator initialRouteName="Splash">
+        <Stack.Navigator initialRouteName="MainApp">
             <Stack.Screen
                 name = "Splash"
-            component={Splash}
+                component={Splash}
                 options= {{headerShown: false}}
             />
             <Stack.Screen
