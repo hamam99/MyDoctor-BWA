@@ -1,24 +1,32 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { IconDoctorActive, IconHospitalActive, IconMessageActive } from '../../../assets';
+import { StyleSheet, Text, View } from 'react-native';
+import { IconDoctorActive, IconDoctorInctive, IconHospitalActive, IconHospitalInactive, IconMessageActive, IconMessageInactive } from '../../../assets';
 
-const TabItem  = ({title}) => {
+const TabItem = ({title}) => {
     const Icon = () => {
         if (title === 'Doctor') {
-            return <IconDoctorActive/>;
+            return <IconDoctorInctive/>;
         }
 
         if (title === 'Messages') {
-            return <IconMessageActive/>;
+            return <IconMessageInactive/>;
         }
 
         if (title === 'Hospitals') {
-            return <IconHospitalActive/>;
+            return <IconHospitalInactive/>;
         }
 
-        return <IconDoctorActive/>; 
+        return <IconDoctorInctive/>;
+    };
+
+    return (
+        <View key={title}>
+            <Icon/>
+            <Text>{title}</Text>
         </View>
     );
+
+
 };
 
 export default TabItem;

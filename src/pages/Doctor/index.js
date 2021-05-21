@@ -11,6 +11,7 @@ const Doctor = ({navigation}) => {
     </View>
   );
 };
+
 export default Doctor;
 
 const styles = StyleSheet.create({

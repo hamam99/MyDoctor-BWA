@@ -11,6 +11,7 @@ const Hospitals = ({navigation}) => {
     </View>
   );
 };
+
 export default Hospitals;
 
 const styles = StyleSheet.create({
