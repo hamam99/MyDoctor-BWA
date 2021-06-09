@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View , StyleSheet} from 'react-native';
+import { colors } from '../../../utils';
 import { TabItem } from '../../atoms';
 
 const BottomNavigator = ({ state, descriptors, navigation }) => {
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={styles.container}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -37,7 +38,11 @@ const BottomNavigator = ({ state, descriptors, navigation }) => {
 
         return (
           <TabItem
+            key={index}
             title={label}
+            active={isFocused}
+            onPress={onPress}
+            onLongPress={onLongPress}
           />
 
         );
@@ -47,3 +52,14 @@ const BottomNavigator = ({ state, descriptors, navigation }) => {
 };
 
 export default BottomNavigator;
+
+const styles = StyleSheet.create({
+  container: {
+      flexDirection:'row',
+      justifyContent:'space-between',
+      paddingHorizontal:53,
+      paddingVertical:12,
+      backgroundColor:colors.secondary,
+  },
+  });
+
