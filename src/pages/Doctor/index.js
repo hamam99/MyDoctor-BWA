@@ -1,13 +1,27 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import { colors, fonts } from '../../utils';
+import { DoctorCategory, HomeProfile, RatedDoctor, NewsItem } from '../../components/molecules';
 
 const Doctor = ({navigation}) => {
   return (
     <View>
-      <Text style={styles.title}>
+      <HomeProfile/>
+      <Text >
         {'Doctor Pages'}
       </Text>
+      <DoctorCategory/>
+      <DoctorCategory/>
+      <DoctorCategory/>
+      <DoctorCategory/>
+      <Text>Top Rated Doctors</Text>
+      <RatedDoctor/>
+      <RatedDoctor/>
+      <RatedDoctor/>
+      <Text>Goodf News</Text>
+      <NewsItem/>
+      <NewsItem/>
+      <NewsItem/>
     </View>
   );
 };
