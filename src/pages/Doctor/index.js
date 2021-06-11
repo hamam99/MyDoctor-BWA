@@ -5,11 +5,9 @@ import { DoctorCategory, HomeProfile, RatedDoctor, NewsItem } from '../../compon
 
 const Doctor = ({navigation}) => {
   return (
-    <View>
+    <View style={styles.page}>
       <HomeProfile/>
-      <Text >
-        {'Doctor Pages'}
-      </Text>
+      <Text style={styles.welcome}> {'Mau konsultasi dengan siapa hari ini?'} </Text>
       <DoctorCategory/>
       <DoctorCategory/>
       <DoctorCategory/>
@@ -31,14 +29,21 @@ export default Doctor;
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    padding:40,
-    justifyContent:'space-between',
-    backgroundColor:colors.white,
+    paddingHorizontal:16,
+    paddingVertical:30,
   },
   title: {
     fontSize: 28,
     marginTop: 91,
     color:'white',
     fontFamily: fonts.primary[600],
+  },
+  welcome: {
+    fontSize:20,
+    fontFamily: fonts.primary[600],
+    color: colors.text.primary,
+    marginTop:30,
+    marginBottom:16,
+    maxWidth:210,
   },
 });
