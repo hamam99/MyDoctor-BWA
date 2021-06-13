@@ -3,6 +3,7 @@ import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import { colors, fonts } from '../../utils';
 import { DoctorCategory, HomeProfile, RatedDoctor, NewsItem } from '../../components/molecules';
 import { Gap } from '../../components/atoms';
+import {JSONCategoryDoctor} from '../../assets';
 
 const Doctor = ({navigation}) => {
   return (
@@ -16,12 +17,18 @@ const Doctor = ({navigation}) => {
            </View>
           <View style={styles.wrapperScroll}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.category}>
-              <Gap width={32}/>
-                <DoctorCategory/>
-                <DoctorCategory/>
-                <DoctorCategory/>
-                <DoctorCategory/>
+              <View style={styles.category}>
+                <Gap width={32}/>
+                {
+                  JSONCategoryDoctor.data.map(category => {
+                    return (
+                      <DoctorCategory
+                        key={category.id}
+                        category={category.category}
+                      />
+                    );
+                  })
+                }
                 <Gap width={22}/>
               </View>
             </ScrollView>

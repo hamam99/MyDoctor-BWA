@@ -1,16 +1,15 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { color } from 'react-native-reanimated';
 import {DummyDoctor2} from '../../../assets';
 import { colors, fonts } from '../../../utils';
 
-const ListDoctor = () => {
+const ListDoctor = ({profile, name, description}) => {
     return (
         <View style={styles.container}>
-            <Image source={DummyDoctor2} style={styles.avatar}/>
+            <Image source={profile} style={styles.avatar}/>
             <View>
-                <Text style={styles.name}>Alexander Jannie</Text>
-                <Text style={styles.desc}>Baik ibu, teirma kasih banyak atas waktu...</Text>
+                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.desc}>{description}</Text>
             </View>
         </View>
     );

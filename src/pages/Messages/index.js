@@ -1,16 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
+import { DummyDoctor1, DummyDoctor2, DummyDoctor3 } from '../../assets';
 import ListDoctor from '../../components/molecules/ListDoctor';
 import { colors, fonts } from '../../utils';
 
 const Messages = ({navigation}) => {
+  const [doctors] = useState([
+    {
+      id:1,
+      profile: DummyDoctor1,
+      name: 'Alexander Jannie',
+      description:'Baik ibu, terima kasih abanyaktunya...',
+    },
+    {
+      id:2,
+      profile: DummyDoctor2,
+      name: 'Naerobi Putri Hayka',
+      description:'Oh Tentu saja tidak karena jeruk itu...',
+    },
+    {
+      id:3,
+      profile: DummyDoctor3,
+      name: 'John Mc Parker Steve',
+      description:'Oke menurut pak dokter bagaimana untuk',
+    },
+  ]);
+
   return (
     <View style={styles.page}>
       <View style={styles.content}>
         <Text style={styles.title}> {'Messages'} </Text>
-        <ListDoctor/>
-        <ListDoctor/>
-        <ListDoctor/>
+        {
+          doctors.map(doctor => {
+            return (
+              <ListDoctor
+                key={doctor.id}
+                profile={doctor.profile}
+                name={doctor.name}
+                description={doctor.description}
+              />
+            );
+          })
+        }
       </View>
     </View>
   );
