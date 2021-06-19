@@ -9,9 +9,9 @@ const Chat = () => {
             <Header type="dark-profile" title="Nairobi"/>
                    <View tyle={{flex:1}}>
                        <Text style={styles.chatDate}>Senin, 21 Maret 2020</Text>
+                        <ChatItem isMe/>
                         <ChatItem/>
-                        <ChatItem/>
-                        <ChatItem/>
+                        <ChatItem isMe/>
                    </View>
             <InputChat/>
         </View>
