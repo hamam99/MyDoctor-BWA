@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { GetStarted, Splash,Login, Register, UploadPhoto, Doctor, Messages, Hospitals, ChooseDoctor } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigator } from '../components';
+import Chat from '../pages/Chat';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,6 +54,11 @@ const Router = () => {
             <Stack.Screen
                 name = "ChooseDoctor"
                 component={ChooseDoctor}
+                options= {{headerShown: false}}
+            />
+            <Stack.Screen
+                name = "Chatting"
+                component={Chat}
                 options= {{headerShown: false}}
             />
         </Stack.Navigator>
