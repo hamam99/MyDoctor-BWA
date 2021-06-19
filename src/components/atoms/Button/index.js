@@ -3,7 +3,8 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { colors, fonts } from '../../../utils';
 import IconOnly from './IconOnly';
 
-const Button = ({type, title, onPress = {}}, icon) => {
+const Button = ({type, title, onPress = {}, icon}) => {
+  console.log('button','icon', icon);
   if (type === 'icon-only') {
     return  (
       <IconOnly icon={icon}  onPress={onPress}/>
