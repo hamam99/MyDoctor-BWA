@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { GetStarted, Splash,Login, Register, UploadPhoto, Doctor, Messages, Hospitals, ChooseDoctor, UserProfile } from '../pages';
+import { GetStarted, Splash,Login, Register, UploadPhoto, Doctor, Messages, Hospitals, ChooseDoctor, UserProfile, UpdateProfile } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigator } from '../components';
 import Chat from '../pages/Chat';
@@ -20,7 +20,7 @@ const MainApp = () => {
 
 const Router = () => {
     return (
-        <Stack.Navigator initialRouteName="UserProfile">
+        <Stack.Navigator initialRouteName="UpdateProfile">
             <Stack.Screen
                 name = "Splash"
                 component={Splash}
@@ -64,6 +64,11 @@ const Router = () => {
             <Stack.Screen
                 name = "UserProfile"
                 component={UserProfile}
+                options= {{headerShown: false}}
+            />
+            <Stack.Screen
+                name = "UpdateProfile"
+                component={UpdateProfile}
                 options= {{headerShown: false}}
             />
         </Stack.Navigator>
