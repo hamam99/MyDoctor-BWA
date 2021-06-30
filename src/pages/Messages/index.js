@@ -38,6 +38,7 @@ const Messages = ({navigation}) => {
                 profile={doctor.profile}
                 name={doctor.name}
                 description={doctor.description}
+                onPress={() => navigation.navigate('Chatting')}
               />
             );
           })

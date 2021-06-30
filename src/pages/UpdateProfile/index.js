@@ -3,15 +3,16 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import {Header, Profile, Input, Button, Gap} from '../../components';
 import { colors } from '../../utils';
 
-const UpdateProfile = () => {
+const UpdateProfile = ({navigation}) => {
     return (
         <View style={styles.page}>
-            <Header title="Edit Profile"/>
+            <Header title="Edit Profile" onPress={() => navigation.goBack()}/>
             <ScrollView showsHorizontalScrollIndicator={false}>
                 <View style={styles.content}>
                     <Profile
                         name="Hamam"
                         description="Product Designer"
+                        isRemove
                     />
                     <Gap height={26}/>
                     <Input label="Full Name"/>
