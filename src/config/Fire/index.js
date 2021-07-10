@@ -10,8 +10,6 @@ const firebaseConfig = {
 };
   // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-
 
 const Fire = firebase;
 
