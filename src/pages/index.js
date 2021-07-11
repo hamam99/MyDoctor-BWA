@@ -10,6 +10,8 @@ import ChooseDoctor from './ChooseDoctor';
 import UserProfile from './UserProfile';
 import UpdateProfile from './UpdateProfile';
 import DoctorProfile from './DoctorProfile';
+import Loading from './Loading';
+
 
 
 export {
@@ -25,4 +27,5 @@ export {
     UserProfile,
     UpdateProfile,
     DoctorProfile,
+    Loading,
 };

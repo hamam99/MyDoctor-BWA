@@ -3,6 +3,8 @@ import { StyleSheet, View, ScrollView} from 'react-native';
 import { Button, Gap, Header, Input } from '../../components';
 import { Fire } from '../../config';
 import { colors, useForm } from '../../utils';
+import Loading from '../Loading';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 const Register = ({navigation}) => {
 
@@ -13,65 +15,77 @@ const Register = ({navigation}) => {
     password:'',
   });
 
+  const [loading, setLoading] = useState(false);
+
   const onContinue = () => {
     // navigation.navigate('UploadPhoto');
-
+    setLoading(true);
     Fire.auth()
       .createUserWithEmailAndPassword(form.email, form.password)
       .then((userCredential) => {
-        // Signed in
+        setLoading(false);
+        setForm('reset');
         const user = userCredential.user;
         console.log('user', user);
       })
       .catch((error) => {
-        const errorCode = error.code;
+        setLoading(false);
+        setForm('reset');
         const errorMessage = error.message;
-        // ..
         console.log('error', errorMessage);
+        showMessage({
+          message:errorMessage,
+          type:'default',
+          backgroundColor:colors.error,
+          color: colors.white,
+        });
       });
   };
 
   return (
-      <View style={styles.page}>
-        <Header
-        title = {'Register'}
-        onPress ={() => {
-          navigation.goBack();
-        }}/>
-        <View style = {styles.content}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <Input
-              label="Full Name"
-              value={form.fullName}
-              onChangeText={(value) => setForm('fullName',value)}
+      <>
+        <View style={styles.page}>
+          <Header
+          title = {'Register'}
+          onPress ={() => {
+            navigation.goBack();
+          }}/>
+          <View style = {styles.content}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+              <Input
+                label="Full Name"
+                value={form.fullName}
+                onChangeText={(value) => setForm('fullName',value)}
+                />
+              <Gap height={24}/>
+              <Input
+                label="Pekerjaan"
+                value={form.profession}
+                onChangeText={(value) => setForm('profession',value)}
+                />
+              <Gap height={24}/>
+              <Input
+                label="Email Address"
+                value={form.email}
+                onChangeText={(value) => setForm('email',value)}
+                />
+              <Gap height={24}/>
+              <Input
+                label="Password"
+                value={form.password}
+                onChangeText={(value) => setForm('password',value)}
+                secureTextEntry={true}
+                />
+              <Gap height={40}/>
+              <Button
+                title= "Continue"
+                onPress = {onContinue}
               />
-            <Gap height={24}/>
-            <Input
-              label="Pekerjaan"
-              value={form.profession}
-              onChangeText={(value) => setForm('profession',value)}
-              />
-            <Gap height={24}/>
-            <Input
-              label="Email Address"
-              value={form.email}
-              onChangeText={(value) => setForm('email',value)}
-              />
-            <Gap height={24}/>
-            <Input
-              label="Password"
-              value={form.password}
-              onChangeText={(value) => setForm('password',value)}
-              secureTextEntry={true}
-              />
-            <Gap height={40}/>
-            <Button
-              title= "Continue"
-              onPress = {onContinue}
-            />
-        </ScrollView>
+          </ScrollView>
+          </View>
         </View>
-        </View>
+        {loading && <Loading/>}
+      </>
     );
   };
 
