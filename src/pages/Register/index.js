@@ -25,8 +25,18 @@ const Register = ({navigation}) => {
       .then((userCredential) => {
         setLoading(false);
         setForm('reset');
+
         const user = userCredential.user;
-        console.log('user', user);
+        const data = {
+          fullName: form.fullName,
+          profession: form.profession,
+          email: form.email,
+        };
+
+        Fire
+        .database()
+        .ref('users/' + user.uid + '/')
+        .set(data);
       })
       .catch((error) => {
         setLoading(false);
