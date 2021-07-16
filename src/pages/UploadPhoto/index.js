@@ -5,11 +5,13 @@ import { Button, Gap, Header, Link } from '../../components';
 import { IconAddPhoto, IconRemovePhoto, ILNullPhoto } from '../../assets';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { showMessage } from 'react-native-flash-message';
+import { Fire } from '../../config';
 
-const UploadPhoto = ({navigation, route}) => {
-    const {fullName,profession} = route.param;
+const UploadPhoto = ({navigation, route = {}}) => {
+    const {fullName,profession,uid} = route.param;
     const [hasPhoto,setHasPhoto] = useState(true);
     const [photo,setPhoto] = useState(ILNullPhoto);
+    const [photoForDb,setPhotoForDb] = useState('');
 
     const getImage = () => {
         const options = {};
@@ -19,12 +21,25 @@ const UploadPhoto = ({navigation, route}) => {
                     message:'Sepertinya kamu tidak memilih foto',
                     type:'danger',
                 });
+
                 return;
             }
+
+            const assets = response.assets[0];
+            setPhotoForDb(`data:${assets.type};bas64, ${assets.base64}`);
+
+            this.uploadAndContinue();
             setHasPhoto(true);
-            const source = {uri: response.assets[0].uri};
+            const source = {uri: assets .uri};
             setPhoto(source);
         });
+    };
+
+    const uploadAndContinue = () =>{
+        Fire.database()
+                .ref(`/users/${uid}/`)
+                .update({photo: photoForDb});
+
     };
 
   return (
@@ -48,7 +63,10 @@ const UploadPhoto = ({navigation, route}) => {
             <View >
                 <Button
                     title="Upload And Continue"
-                    onPress={() => navigation.replace('MainApp')}
+                    onPress={() => {
+                        navigation.replace('MainApp');
+                        this.uploadAndContinue();
+                    }}
                     disable={!hasPhoto}
                 />
                 <Gap height={30}/>
