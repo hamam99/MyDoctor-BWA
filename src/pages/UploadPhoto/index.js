@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { colors, fonts } from '../../utils';
+import { colors, fonts, storeData } from '../../utils';
 import { Button, Gap, Header, Link } from '../../components';
 import { IconAddPhoto, IconRemovePhoto, ILNullPhoto } from '../../assets';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -8,13 +8,20 @@ import { showMessage } from 'react-native-flash-message';
 import { Fire } from '../../config';
 
 const UploadPhoto = ({navigation, route = {}}) => {
-    const {fullName,profession,uid} = route.param;
+    // const {fullName,profession,uid} = route.params;
+    const {fullName,profession,uid} = {};
     const [hasPhoto,setHasPhoto] = useState(true);
     const [photo,setPhoto] = useState(ILNullPhoto);
     const [photoForDb,setPhotoForDb] = useState('');
 
     const getImage = () => {
-        const options = {};
+        const options = {
+            quality: 0.5,
+            maxWidth:200,
+            maxHeight: 200,
+            includeBase64: true,
+        };
+
         launchImageLibrary(options, response =>{
             if (response.didCancel || response.errorMessage) {
                 showMessage({
@@ -26,11 +33,11 @@ const UploadPhoto = ({navigation, route = {}}) => {
             }
 
             const assets = response.assets[0];
+            console.log('sset', assets);
             setPhotoForDb(`data:${assets.type};bas64, ${assets.base64}`);
 
-            this.uploadAndContinue();
             setHasPhoto(true);
-            const source = {uri: assets .uri};
+            const source = {uri: assets.uri};
             setPhoto(source);
         });
     };
@@ -39,6 +46,12 @@ const UploadPhoto = ({navigation, route = {}}) => {
         Fire.database()
                 .ref(`/users/${uid}/`)
                 .update({photo: photoForDb});
+
+        const data = route.params;
+        data.photo = photoForDb;
+        storeData('user',data);
+
+        navigation.replace('MainApp');
 
     };
 
@@ -64,8 +77,7 @@ const UploadPhoto = ({navigation, route = {}}) => {
                 <Button
                     title="Upload And Continue"
                     onPress={() => {
-                        navigation.replace('MainApp');
-                        this.uploadAndContinue();
+                        uploadAndContinue();
                     }}
                     disable={!hasPhoto}
                 />
