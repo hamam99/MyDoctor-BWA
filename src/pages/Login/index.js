@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import { ILLogo } from '../../assets/ilustration';
 import {
   Button,
@@ -7,23 +8,68 @@ import {
   Input,
   Link,
 } from '../../components';
-import { colors, fonts } from '../../utils';
+import { Fire } from '../../config';
+import { colors, fonts, storeData, useForm } from '../../utils';
+import Loading  from '../Loading';
 
 const Login = ({navigation}) => {
+  const [form, setForm] = useForm({email:'', password:''});
+  const [loading, setLoading] = useState(false);
+
+  const login = async () => {
+    setLoading(true);
+    Fire
+    .auth()
+    .signInWithEmailAndPassword(form.email, form.password)
+    .then(result => {
+      setLoading(false);
+
+      Fire.database().ref(`user/${result.user.uid}/`).once('value').then(res => {
+        console.log('dataase',result.val);
+
+        if (res.val) {
+          storeData('user', res.val);
+          navigation.navigate('MainApp');
+        }
+      });
+    })
+    .catch(error =>{
+      setLoading(false);
+      showMessage({
+        type:'danger',
+        message: error.message,
+      });
+    });
+  };
+
     return (
-      <View style={styles.page}>
-        <ILLogo/>
-        <Text style = {styles.title}>Login</Text>
-        <Input label = "Email Address"/>
-        <Gap height = {24}/>
-        <Input label = "Password" />
-        <Gap height = {10}/>
-        <Link title = "Forgot My Password" size = {12}/>
-        <Gap height = {40}/>
-        <Button title = "Sign In" onPress = {() => navigation.replace('MainApp')}/>
-        <Gap height = {30}/>
-        <Link title = "Create New Account" size = {16} align= "center" onPress={() => navigation.navigate('Register')}/>
-      </View>
+      <>
+        <View style={styles.page}>
+          <ILLogo/>
+          <Text style = {styles.title}>Login</Text>
+          <Input
+            label = "Email Address"
+            value={form.email}
+            onChangeText={email => setForm('email', email)}
+          />
+          <Gap height = {24}/>
+          <Input
+            label = "Password"
+            value={form.password}
+            onChangeText={password => setForm('password', password)}
+            secureTextEntry
+            />
+          <Gap height = {10}/>
+          <Link title = "Forgot My Password" size = {12}/>
+          <Gap height = {40}/>
+          <Button
+            title="Sign In"
+            onPress={login}/>
+          <Gap height = {30}/>
+          <Link title = "Create New Account" size = {16} align= "center" onPress={() => navigation.navigate('Register')}/>
+        </View>
+        {loading && <Loading />}
+        </>
     );
   };
 
