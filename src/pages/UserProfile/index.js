@@ -1,7 +1,9 @@
 import React,{useState, useEffect} from 'react';
 import { StyleSheet, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import { ILNullPhoto } from '../../assets';
 import {Profile, Header,List, Gap} from '../../components';
+import { Fire } from '../../config';
 import { getData } from '../../utils';
 
 const UserProfile = ({navigation}) => {
@@ -20,6 +22,17 @@ const UserProfile = ({navigation}) => {
         });
     }, []);
 
+    const signOut = () => {
+        Fire.auth().signOut().then(res =>{
+            navigation.replace('GetStarted');
+        })
+        .catch(err => {
+            showMessage({
+                message: err.message,
+                type:'danger',
+            });
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -49,11 +62,11 @@ const UserProfile = ({navigation}) => {
                 onPress={() => navigation.navigate('UpdateProfile')}
                 />
             <List
-                name="Help Center"
-                description="Read our Guideline"
+                name="Sign Out"
+                description="To signout from app"
                 type="next"
                 icon="help"
-                onPress={() => navigation.navigate('UpdateProfile')}
+                onPress={() => signOut()}
                 />
         </View>
     );
