@@ -7,7 +7,7 @@ const HomeProfile = ({onPress}) => {
     const [profile, setProfile] = useState({
         photo: ILNullPhoto,
         fullName: '',
-        professtion:'',
+        profession:'',
     });
 
 
@@ -25,7 +25,7 @@ const HomeProfile = ({onPress}) => {
             <Image source={profile.photo} style={styles.avatar}/>
             <View>
                 <Text style={styles.name}>{profile.fullName}</Text>
-                <Text style={styles.profression}>{profile.professtion}</Text>
+                <Text style={styles.profression}>{profile.profession}</Text>
             </View>
         </TouchableOpacity>
     );

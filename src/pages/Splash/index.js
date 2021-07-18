@@ -2,13 +2,22 @@ import React from 'react';
 import { useEffect } from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {ILLogo} from '../../assets/ilustration';
+import { Fire } from '../../config';
 import { colors, fonts } from '../../utils';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
       navigation.replace('GetStarted');
-    },3000);
+      Fire.auth().onAuthStateChanged(user =>{
+        if (user) {
+          navigation.replace('MainApp');
+          return;
+        }
+
+        navigation.replace('GetStarted');
+      });
+    },1000);
   }, [navigation]);
 
   return (

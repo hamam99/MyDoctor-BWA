@@ -8,8 +8,7 @@ import { showMessage } from 'react-native-flash-message';
 import { Fire } from '../../config';
 
 const UploadPhoto = ({navigation, route = {}}) => {
-    // const {fullName,profession,uid} = route.params;
-    const {fullName,profession,uid} = {};
+    const {fullName,profession,uid} = route.params;
     const [hasPhoto,setHasPhoto] = useState(true);
     const [photo,setPhoto] = useState(ILNullPhoto);
     const [photoForDb,setPhotoForDb] = useState('');
@@ -52,7 +51,6 @@ const UploadPhoto = ({navigation, route = {}}) => {
         storeData('user',data);
 
         navigation.replace('MainApp');
-
     };
 
   return (

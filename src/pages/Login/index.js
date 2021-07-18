@@ -24,11 +24,13 @@ const Login = ({navigation}) => {
     .then(result => {
       setLoading(false);
 
-      Fire.database().ref(`user/${result.user.uid}/`).once('value').then(res => {
-        console.log('dataase',result.val);
+      Fire.database().ref(`users/${result.user.uid}/`).once('value').then(resultDB => {
+        console.log('dataase','result',result);
 
-        if (res.val) {
-          storeData('user', res.val);
+        console.log('dataase','resultDB.val',resultDB.val);
+        console.log('dataase','resultDB.val()',resultDB.val());
+        if (resultDB.val()) {
+          storeData('user', resultDB.val());
           navigation.navigate('MainApp');
         }
       });
