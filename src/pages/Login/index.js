@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
+import { useDispatch } from 'react-redux';
 import { ILLogo } from '../../assets/ilustration';
 import {
   Button,
@@ -9,26 +9,22 @@ import {
   Link,
 } from '../../components';
 import { Fire } from '../../config';
-import { colors, fonts, storeData, useForm } from '../../utils';
-import Loading  from '../Loading';
+import { colors, fonts, showError, storeData, useForm } from '../../utils';
 
 const Login = ({navigation}) => {
   const [form, setForm] = useForm({email:'', password:''});
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const login = async () => {
-    setLoading(true);
+    showLoading(true);
+
     Fire
     .auth()
     .signInWithEmailAndPassword(form.email, form.password)
     .then(result => {
-      setLoading(false);
+      showLoading(false);
 
       Fire.database().ref(`users/${result.user.uid}/`).once('value').then(resultDB => {
-        console.log('dataase','result',result);
-
-        console.log('dataase','resultDB.val',resultDB.val);
-        console.log('dataase','resultDB.val()',resultDB.val());
         if (resultDB.val()) {
           storeData('user', resultDB.val());
           navigation.navigate('MainApp');
@@ -36,16 +32,20 @@ const Login = ({navigation}) => {
       });
     })
     .catch(error =>{
-      setLoading(false);
-      showMessage({
-        type:'danger',
-        message: error.message,
-      });
+      showLoading(false);
+      showError(error.message);
     });
   };
 
+  const showLoading = (value) => {
+    dispatch({
+      type:'SET_LOADING',
+      value,
+    });
+
+  };
+
     return (
-      <>
         <View style={styles.page}>
           <ILLogo/>
           <Text style = {styles.title}>Login</Text>
@@ -70,8 +70,6 @@ const Login = ({navigation}) => {
           <Gap height = {30}/>
           <Link title = "Create New Account" size = {16} align= "center" onPress={() => navigation.navigate('Register')}/>
         </View>
-        {loading && <Loading />}
-        </>
     );
   };
 

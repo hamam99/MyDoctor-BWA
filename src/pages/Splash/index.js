@@ -7,17 +7,22 @@ import { colors, fonts } from '../../utils';
 
 const Splash = ({navigation}) => {
   useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('GetStarted');
-      Fire.auth().onAuthStateChanged(user =>{
-        if (user) {
-          navigation.replace('MainApp');
-          return;
-        }
-
+    const unsubscribe =  Fire.auth().onAuthStateChanged(user => {
+      setTimeout(() => {
         navigation.replace('GetStarted');
-      });
-    },1000);
+          if (user) {
+            navigation.replace('MainApp');
+            return;
+          }
+
+          navigation.replace('GetStarted');
+      },3000);
+
+    });
+
+
+    // will unmount the effect
+    return () => unsubscribe();
   }, [navigation]);
 
   return (

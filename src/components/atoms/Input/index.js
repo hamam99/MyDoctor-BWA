@@ -22,6 +22,8 @@ const  Input = ({label, value,onChangeText,secureTextEntry = false, disable = fa
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        editable={!disable}
+        selectTextOnFocus={!disable}
         />
     </View>
   );
