@@ -3,7 +3,6 @@ import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import { colors, fonts, showError } from '../../utils';
 import { DoctorCategory, HomeProfile, RatedDoctor, NewsItem } from '../../components/molecules';
 import { Gap } from '../../components/atoms';
-import {DummyDoctor1} from '../../assets';
 import { Fire } from '../../config';
 
 const Doctor = ({navigation}) => {
@@ -26,7 +25,8 @@ const Doctor = ({navigation}) => {
         return;
       }
 
-      setNews(res.val());
+      const filteredData = res.val().filter(el => el !== null);
+      setNews(filteredData);
     })
     .catch(err => {
       showError(err.message);
@@ -38,13 +38,12 @@ const Doctor = ({navigation}) => {
     .ref('category_doc/')
     .once('value')
     .then(res => {
-      console.log('res', res.val());
-
       if (!res.val()) {
         return;
       }
 
-      setCategoryDoctor(res.val());
+      const filteredData = res.val().filter(el => el !== null);
+      setCategoryDoctor(filteredData);
     })
     .catch(err => {
       showError(err.message);
@@ -58,8 +57,6 @@ const Doctor = ({navigation}) => {
     .limitToLast(3)
     .once('value')
     .then(res => {
-      console.log('res', res.val());
-
       if (!res.val()) {
         return;
       }
@@ -93,7 +90,7 @@ const Doctor = ({navigation}) => {
                         key={category.id}
                         category={category.category}
                         onPress={() => {
-                          navigation.navigate('ChooseDoctor');
+                          navigation.navigate('ChooseDoctor', category);
                         }}
                       />
                     );
@@ -114,7 +111,7 @@ const Doctor = ({navigation}) => {
                   desc={doctor.profession}
                   avatar={{uri : doctor.photo}}
                   onPress={() => {
-                    navigation.navigate('DoctorProfile', {doctorId: doctor.id});
+                    navigation.navigate('DoctorProfile',doctor);
                   }}
                 />
               );

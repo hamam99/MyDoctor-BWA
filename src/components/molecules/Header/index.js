@@ -45,6 +45,7 @@ const  Header = ({onPress, title,type}) => {
             fontSize:20,
             fontFamily:fonts.primary[600],
             color: type === 'dark' ? colors.white : colors.text.primary,
+            textTransform:'capitalize',
         }
       ),
   });
