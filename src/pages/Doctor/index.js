@@ -1,11 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
-import { colors, fonts } from '../../utils';
+import { colors, fonts, showError } from '../../utils';
 import { DoctorCategory, HomeProfile, RatedDoctor, NewsItem } from '../../components/molecules';
 import { Gap } from '../../components/atoms';
-import {DummyDoctor1, JSONCategoryDoctor} from '../../assets';
+import {DummyDoctor1} from '../../assets';
+import { Fire } from '../../config';
 
 const Doctor = ({navigation}) => {
+  const [news, setNews] = useState([]);
+  const [categoryDoctor, setCategoryDoctor] = useState([]);
+  const [topRatedDoctors, setTopRatedDoctors] = useState([]);
+
+  useEffect(() => {
+    getNews();
+    getCategoryDoctor();
+    getTopRatedDoctors();
+  },[]);
+
+  const getNews = () => {
+    Fire.database()
+    .ref('news/')
+    .once('value')
+    .then(res => {
+      if (!res.val()) {
+        return;
+      }
+
+      setNews(res.val());
+    })
+    .catch(err => {
+      showError(err.message);
+    });
+  };
+
+  const getCategoryDoctor = () => {
+    Fire.database()
+    .ref('category_doc/')
+    .once('value')
+    .then(res => {
+      console.log('res', res.val());
+
+      if (!res.val()) {
+        return;
+      }
+
+      setCategoryDoctor(res.val());
+    })
+    .catch(err => {
+      showError(err.message);
+    });
+  };
+
+  const getTopRatedDoctors = () => {
+    Fire.database()
+    .ref('doctors/')
+    .orderByChild('rate')
+    .limitToLast(3)
+    .once('value')
+    .then(res => {
+      console.log('res', res.val());
+
+      if (!res.val()) {
+        return;
+      }
+
+      setTopRatedDoctors(res.val());
+    })
+    .catch(err => {
+      showError(err.message);
+    });
+  };
+
   return (
     <View style={styles.page}>
       <View style={styles.content}>
@@ -22,7 +87,7 @@ const Doctor = ({navigation}) => {
               <View style={styles.category}>
                 <Gap width={32}/>
                 {
-                  JSONCategoryDoctor.data.map(category => {
+                  categoryDoctor.map(category => {
                     return (
                       <DoctorCategory
                         key={category.id}
@@ -41,14 +106,31 @@ const Doctor = ({navigation}) => {
           </View>
           <View style={styles.wrapperSection}>
             <Text style={styles.selectionLabel}>Top Rated Doctors</Text>
-            <RatedDoctor name="Alexa Rachel" desc="Pediatrician" avatar={DummyDoctor1} onPress={() => navigation.navigate('DoctorProfile')}/>
-            <RatedDoctor name="Alexa Rachel" desc="Pediatrician" avatar={DummyDoctor1} onPress={() => navigation.navigate('DoctorProfile')}/>
-            <RatedDoctor name="Alexa Rachel" desc="Pediatrician" avatar={DummyDoctor1} onPress={() => navigation.navigate('DoctorProfile')}/>
+            {topRatedDoctors.map(doctor=> {
+              return (
+                <RatedDoctor
+                  key={doctor.id}
+                  name={doctor.full_name}
+                  desc={doctor.profession}
+                  avatar={{uri : doctor.photo}}
+                  onPress={() => {
+                    navigation.navigate('DoctorProfile', {doctorId: doctor.id});
+                  }}
+                />
+              );
+            })}
           </View>
           <Text style={styles.selectionLabel}>Good News</Text>
-          <NewsItem/>
-          <NewsItem/>
-          <NewsItem/>
+          {news.map(item => {
+            return (
+              <NewsItem
+                key={item.id}
+                title={item.title}
+                date={item.date}
+                image={item.image}
+              />
+            );
+          })}
           <Gap height={30}/>
         </ScrollView>
       </View>
@@ -94,10 +176,10 @@ const styles = StyleSheet.create({
   },
   selectionLabel:{
     fontSize:16,
-    fontFamily:fonts.primary[600],
-    color: colors.text.secondary,
+    fontFamily:fonts.primary[700],
+    color: colors.text.primary,
     marginTop:30,
     marginBottom:16,
-
+    marginLeft:16,
   },
 });
