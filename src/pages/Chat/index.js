@@ -42,8 +42,6 @@ const Chat = ({navigation, route}) => {
                 });
             });
 
-            console.log('allDataChat', allDataChat);
-
             setChatData(allDataChat);
 
         });
@@ -78,6 +76,18 @@ const Chat = ({navigation, route}) => {
 
         const chatID = `${user.uid}_${doctor.uid}`;
         const urlFirebase = `chatting/${chatID}/allchat/${setDateChat(today)}`;
+        const urlMessagesUser = `messages/${user.uid}/${chatID}`;
+        const urlMessagesDoctor = `messages/${doctor.uid}/${chatID}`;
+        const dataHistoryChatForUser = {
+            lastContentChat: chatContent,
+            lastChatDate: today.getTime(),
+            uidPartner: doctor.uid,
+        };
+        const dataHistoryChatForDoctor = {
+            lastContentChat: chatContent,
+            lastChatDate: today.getTime(),
+            uidPartner: user.uid,
+        };
 
         Fire.database()
         .ref(urlFirebase)
@@ -85,6 +95,16 @@ const Chat = ({navigation, route}) => {
         .then(result => {
             console.log('result send chat', result);
             setChatContent('');
+
+            Fire
+            .database()
+            .ref(urlMessagesUser)
+            .set(dataHistoryChatForUser);
+
+            Fire
+            .database()
+            .ref(urlMessagesDoctor)
+            .set(dataHistoryChatForDoctor);
         })
         .catch(error => {
             showError(error.message);
