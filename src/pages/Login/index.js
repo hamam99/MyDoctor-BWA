@@ -22,6 +22,7 @@ const Login = ({navigation}) => {
     .auth()
     .signInWithEmailAndPassword(form.email, form.password)
     .then(result => {
+      console.log('result', result);
       showLoading(false);
 
       Fire.database().ref(`users/${result.user.uid}/`).once('value').then(resultDB => {

@@ -5,10 +5,16 @@ import { colors, fonts } from '../../../utils';
 import { Button, Gap } from '../../atoms';
 import DarkProfile from './DarkProfile';
 
-const  Header = ({onPress, title,type}) => {
+const  Header = ({onPress, title, type, photo, desc}) => {
     if (type === 'dark-profile') {
         return (
-            <DarkProfile/>
+            <DarkProfile
+              onPress={onPress}
+              title={title}
+              type={type}
+              photo={photo}
+              desc={desc}
+            />
         );
     }
 

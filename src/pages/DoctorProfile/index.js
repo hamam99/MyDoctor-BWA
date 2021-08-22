@@ -22,7 +22,9 @@ const DoctorProfile = ({navigation, route}) => {
                 label="No. STR"
                 value={doctor.str_number}/>
             <View style={styles.action}>
-                <Button title="Start Consultation"/>
+                <Button
+                    title="Start Consultation"
+                    onPress={() => navigation.navigate('Chatting', doctor)}/>
             </View>
         </View>
     );
@@ -33,6 +35,7 @@ export default DoctorProfile;
 const styles = StyleSheet.create({
     page:{
         backgroundColor:'white',
+        flex:1,
     },
     action:{
         paddingHorizontal:40,

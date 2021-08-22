@@ -1,19 +1,124 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { ChatItem, Header, InputChat } from '../../components';
-import { colors, fonts } from '../../utils';
+import { colors, fonts, getChatTime, getData, setDateChat, showError } from '../../utils';
+import { Fire } from '../../config';
 
-const Chat = ({navigation}) => {
+const Chat = ({navigation, route}) => {
+    const doctor = route.params ?? {};
+    const [chatContent, setChatContent] = useState('');
+    const [user, setUser] = useState({});
+    const [chatData, setChatData] = useState({});
+
+    useEffect(() => {
+        getDataUserFromLocal();
+
+        const chatID = `${user.uid}_${doctor.uid}`;
+        const urlFirebase = `chatting/${chatID}/allchat/`;
+        Fire.database().ref(urlFirebase).on('value', (snapshot) => {
+            const dataSnapshot = snapshot.val();
+
+            if (!dataSnapshot){
+                return;
+            }
+
+            const allDataChat = [];
+            Object.keys(dataSnapshot).map(key => {
+                const dataChat = dataSnapshot[key];
+                const newDataChat = [];
+
+                Object.key(dataChat).map(itemChat => {
+                    newDataChat.push({
+                        id: itemChat,
+                        data: dataChat[itemChat],
+                    });
+                });
+
+                allDataChat.push({
+                    id: key,
+                    data: newDataChat,
+                });
+            });
+
+        });
+
+    // },[doctor.uid, user.uid]);
+    },[doctor?.uid, user?.uid]);
+
+    const getDataUserFromLocal = () => {
+        getData('user').then(res => {
+            console.log('user', res);
+            setUser(res);
+        });
+    };
+
+    const getDataChatting = () => {
+        const chatID = `${user.uid}_${doctor.uid}`;
+        const urlFirebase = `chatting/${chatID}/allchat`;
+        Fire.database().ref(urlFirebase).on('value', (snapshot) => {
+            console.log('data chat', snapshot.val());
+        });
+    };
+
+    const chatSend = () => {
+        // send to firebase
+        const today = new Date();
+        const data = {
+            sendBy: user.uid,
+            chatDate: today.getTime(),
+            chatTime: getChatTime(today),
+            chatContent: chatContent,
+        };
+
+        const chatID = `${user.uid}_${doctor.uid}`;
+        const urlFirebase = `chatting/${chatID}/allchat/${setDateChat(today)}`;
+
+        Fire.database()
+        .ref(urlFirebase)
+        .push(data)
+        .then(result => {
+            console.log('result send chat', result);
+            setChatContent('');
+        })
+        .catch(error => {
+            showError(error.message);
+        });
+    };
+
     return (
         <View style={styles.page}>
-            <Header type="dark-profile" title="Nairobi" onPress={() => navigation.goBack()}/>
-                   <View tyle={{flex:1}}>
-                       <Text style={styles.chatDate}>Senin, 21 Maret 2020</Text>
-                        <ChatItem isMe/>
-                        <ChatItem/>
-                        <ChatItem isMe/>
-                   </View>
-            <InputChat/>
+            <Header
+                type="dark-profile"
+                title={doctor.full_name}
+                desc={doctor.category}
+                onPress={() => navigation.goBack()}
+                photo={{uri: doctor.photo}}
+            />
+            {/* <View style={styles.content}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {
+                        chatData.map((chat, index) => {
+                            return (
+                                <View>
+                                    <Text style={styles.chatDate}>{chat.id}</Text>
+                                    {
+
+                                    }
+
+                                    <ChatItem isMe/>
+                                    <ChatItem/>
+                                    <ChatItem isMe/>
+                                </View>
+                            );
+                        })
+                    }
+                </ScrollView>
+            </View> */}
+            <InputChat
+                value={chatContent}
+                onChangeText={(text) => {setChatContent(text);}}
+                onButtonPress={chatSend}
+            />
         </View>
     );
 };
@@ -24,6 +129,9 @@ export default Chat;
 const styles = StyleSheet.create({
     page: {
         backgroundColor: colors.white,
+        flex:1,
+    },
+    content:{
         flex:1,
     },
     chatDate: {
