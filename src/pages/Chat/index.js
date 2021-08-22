@@ -8,7 +8,7 @@ const Chat = ({navigation, route}) => {
     const doctor = route.params ?? {};
     const [chatContent, setChatContent] = useState('');
     const [user, setUser] = useState({});
-    const [chatData, setChatData] = useState({});
+    const [chatData, setChatData] = useState([]);
 
     useEffect(() => {
         getDataUserFromLocal();
@@ -27,18 +27,24 @@ const Chat = ({navigation, route}) => {
                 const dataChat = dataSnapshot[key];
                 const newDataChat = [];
 
-                Object.key(dataChat).map(itemChat => {
+                Object.keys(dataChat).map(itemChat => {
                     newDataChat.push({
                         id: itemChat,
                         data: dataChat[itemChat],
                     });
                 });
 
+                console.log('newDataChat', newDataChat);
+
                 allDataChat.push({
                     id: key,
                     data: newDataChat,
                 });
             });
+
+            console.log('allDataChat', allDataChat);
+
+            setChatData(allDataChat);
 
         });
 
@@ -94,26 +100,33 @@ const Chat = ({navigation, route}) => {
                 onPress={() => navigation.goBack()}
                 photo={{uri: doctor.photo}}
             />
-            {/* <View style={styles.content}>
+            <View style={styles.content}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {
                         chatData.map((chat, index) => {
                             return (
-                                <View>
+                                <View key={index}>
                                     <Text style={styles.chatDate}>{chat.id}</Text>
                                     {
-
+                                        chat.data.map((itemChat) => {
+                                            const isMe = itemChat.data.sendBy === user.uid;
+                                            return (
+                                                <ChatItem
+                                                    key={itemChat.id}
+                                                    isMe={isMe}
+                                                    text={itemChat.data.chatContent}
+                                                    date={itemChat.data.chatTime}
+                                                    photo={{uri: doctor.photo}}
+                                                />
+                                            );
+                                        })
                                     }
-
-                                    <ChatItem isMe/>
-                                    <ChatItem/>
-                                    <ChatItem isMe/>
                                 </View>
                             );
                         })
                     }
                 </ScrollView>
-            </View> */}
+            </View>
             <InputChat
                 value={chatContent}
                 onChangeText={(text) => {setChatContent(text);}}
