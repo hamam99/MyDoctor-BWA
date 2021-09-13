@@ -7,12 +7,10 @@ const Profile = ({name, description, isRemove, photo, onPress}) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.borderProfile}  onPress={() => {
-                console.log('on press get image');
                 if (!isRemove) {
                     return;
                 }
 
-                console.log(onPress);
                 onPress();
             }}>
                 <Image source={photo} style={styles.avatar} />

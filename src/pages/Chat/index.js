@@ -34,8 +34,6 @@ const Chat = ({navigation, route}) => {
                     });
                 });
 
-                console.log('newDataChat', newDataChat);
-
                 allDataChat.push({
                     id: key,
                     data: newDataChat,
@@ -51,18 +49,16 @@ const Chat = ({navigation, route}) => {
 
     const getDataUserFromLocal = () => {
         getData('user').then(res => {
-            console.log('user', res);
             setUser(res);
         });
     };
 
-    const getDataChatting = () => {
-        const chatID = `${user.uid}_${doctor.uid}`;
-        const urlFirebase = `chatting/${chatID}/allchat`;
-        Fire.database().ref(urlFirebase).on('value', (snapshot) => {
-            console.log('data chat', snapshot.val());
-        });
-    };
+    // const getDataChatting = () => {
+    //     const chatID = `${user.uid}_${doctor.uid}`;
+    //     const urlFirebase = `chatting/${chatID}/allchat`;
+    //     Fire.database().ref(urlFirebase).on('value', (snapshot) => {
+    //     });
+    // };
 
     const chatSend = () => {
         // send to firebase
@@ -93,7 +89,6 @@ const Chat = ({navigation, route}) => {
         .ref(urlFirebase)
         .push(data)
         .then(result => {
-            console.log('result send chat', result);
             setChatContent('');
 
             Fire

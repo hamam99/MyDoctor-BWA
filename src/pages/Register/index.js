@@ -45,7 +45,6 @@ const Register = ({navigation}) => {
         setLoading(false);
         setForm('reset');
         const errorMessage = error.message;
-        console.log('error', errorMessage);
         showMessage({
           message:errorMessage,
           type:'default',

@@ -20,8 +20,6 @@ const ChooseDoctor = ({navigation, route}) => {
         .equalTo(categorySelected)
         .once('value')
         .then(res => {
-          console.log('res', res.val());
-
           if (!res.val()) {
             return;
           }
@@ -43,7 +41,6 @@ const ChooseDoctor = ({navigation, route}) => {
 
     };
 
-    console.log('list doctor', listDoctors);
     return (
         <View style={styles.page}>
            <Header
@@ -52,7 +49,6 @@ const ChooseDoctor = ({navigation, route}) => {
                 onPress={() => navigation.goBack()}
                 />
             {listDoctors.map((doctor, i) =>{
-                console.log('doctor', doctor);
                 return (
                     <List
                         key={i}

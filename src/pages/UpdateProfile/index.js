@@ -22,7 +22,6 @@ const UpdateProfile = ({navigation}) => {
     useEffect(() => {
         getData('user').then(user => {
             user.photo = {uri: user.photo};
-            console.log(user);
             setProfile(user);
         });
       }, []);
@@ -68,7 +67,6 @@ const UpdateProfile = ({navigation}) => {
         .ref(`users/${profile.uid}/`)
         .update(data)
         .then(result => {
-            console.log('firebase update','result', result);
         })
         .catch(err => {
             showMessage({
@@ -86,7 +84,6 @@ const UpdateProfile = ({navigation}) => {
     };
 
     const getImage = () => {
-        console.log('getImage');
         const options = {
             quality: 0.5,
             maxWidth:200,
@@ -105,7 +102,6 @@ const UpdateProfile = ({navigation}) => {
             }
 
             const assets = response.assets[0];
-            console.log('sset', assets);
             setPhotoForDb(`data:${assets.type};base64, ${assets.base64}`);
             const source = {uri: assets.uri};
             setPhoto(source);

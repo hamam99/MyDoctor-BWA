@@ -18,7 +18,6 @@ const UserProfile = ({navigation}) => {
             user.photo = {uri: user.photo};
             setProfile(user);
         }).catch(err =>{
-            console.log('error', err);
         });
     }, []);
 

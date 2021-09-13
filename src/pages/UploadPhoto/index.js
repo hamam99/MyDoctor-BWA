@@ -32,7 +32,6 @@ const UploadPhoto = ({navigation, route = {}}) => {
             }
 
             const assets = response.assets[0];
-            console.log('sset', assets);
             setPhotoForDb(`data:${assets.type};base64, ${assets.base64}`);
 
             setHasPhoto(true);
