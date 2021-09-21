@@ -16,11 +16,8 @@ Simple app using react native for consulation
 ## Screenshot
 
 <img src="./screenshot/OnboardScreen.png" width="200">
-
-![Onboard Screen](./screenshot/OnboardScreen.png =250x)
-![Login Screen](./screenshot/LoginScreen.png)
-![Registration Screen](./screenshot/RegistrationScreen.png)
-![Doctor Screen](./screenshot/DoctorScreen.png)
-![Hospital Screen](./screenshot/HospitalScreen.png)
-![Doctor Profile Screen](./screenshot/DoctorProfileScreen.png)
-![Chat Screen](./screenshot/ChatScreen.png)
+<img src="./screenshot/RegistrationScreen.png" width="200">
+<img src="./screenshot/DoctorScreen.png" width="200">
+<img src="./screenshot/HospitalScreen.png" width="200">
+<img src="./screenshot/DoctorProfileScreen.png" width="200">
+<img src="./screenshot/ChatScreen.png" width="200">
