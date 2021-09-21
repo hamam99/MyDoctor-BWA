@@ -15,6 +15,8 @@ Simple app using react native for consulation
 
 ## Screenshot
 
+<img src="./screenshot/OnboardScreen.png" width="200">
+
 ![Onboard Screen](./screenshot/OnboardScreen.png =250x)
 ![Login Screen](./screenshot/LoginScreen.png)
 ![Registration Screen](./screenshot/RegistrationScreen.png)
